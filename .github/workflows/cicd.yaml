@@ -37,17 +37,4 @@ jobs:
         docker push 296890349261.dkr.ecr.us-east-1.amazonaws.com/movie-backend:v${GITHUB_RUN_NUMBER}
         
 
-  deploy:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    steps:
-      - name: SSH into EC2 and redeploy via Docker Compose
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            cd ~/deployment
-            docker compose pull movie-frontend
-            docker compose up -d movie-frontend     
+      
